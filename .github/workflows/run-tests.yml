@@ -26,11 +26,11 @@ jobs:
       - name: Run PHP-CS-Fixer
         run: |
           if [ -f vendor/bin/php-cs-fixer ]; then
-            vendor/bin/php-cs-fixer fix --dry-run --diff
+            vendor/bin/php-cs-fixer fix --dry-run --diff --using-cache=no .
           else
             echo "php-cs-fixer not found, installing globally..."
             composer global require friendsofphp/php-cs-fixer
-            ~/.composer/vendor/bin/php-cs-fixer fix --dry-run --diff
+            ~/.composer/vendor/bin/php-cs-fixer fix --dry-run --diff --using-cache=no .
           fi
 
       - name: Run PHP lint
