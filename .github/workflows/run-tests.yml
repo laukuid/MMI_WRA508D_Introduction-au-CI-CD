@@ -15,10 +15,13 @@ jobs:
         with:
           php-version: '8.2'
           coverage: pcov
-          tools: composer, php-cs-fixer, phpstan, phpunit
+          tools: composer, phpstan, phpunit
 
       - name: Install dependencies
         run: composer install --no-progress --prefer-dist --dev
+
+      - name: Install PHP-CS-Fixer
+        run: composer require --dev friendsofphp/php-cs-fixer
 
       - name: Debug Composer Packages
         run: ls -la vendor/bin
@@ -30,7 +33,7 @@ jobs:
           else
             echo "php-cs-fixer not found, installing globally..."
             composer global require friendsofphp/php-cs-fixer
-            ~/.composer/vendor/bin/php-cs-fixer fix --dry-run --diff --using-cache=no .
+            $(composer global config home)/vendor/bin/php-cs-fixer fix --dry-run --diff --using-cache=no .
           fi
 
       - name: Run PHP lint
