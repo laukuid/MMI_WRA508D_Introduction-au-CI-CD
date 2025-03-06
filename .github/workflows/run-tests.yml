@@ -24,7 +24,14 @@ jobs:
         run: ls -la vendor/bin
 
       - name: Run PHP-CS-Fixer
-        run: vendor/bin/php-cs-fixer fix --dry-run --diff
+        run: |
+          if [ -f vendor/bin/php-cs-fixer ]; then
+            vendor/bin/php-cs-fixer fix --dry-run --diff
+          else
+            echo "php-cs-fixer not found, installing globally..."
+            composer global require friendsofphp/php-cs-fixer
+            ~/.composer/vendor/bin/php-cs-fixer fix --dry-run --diff
+          fi
 
       - name: Run PHP lint
         run: find src tests -name "*.php" -exec php -l {} \;
